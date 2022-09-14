@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 (function() {
-    setTimeout(getRatio, 2500);
+    setTimeout(getRatio, 3000);
 })();
 
 function getRatio() {
