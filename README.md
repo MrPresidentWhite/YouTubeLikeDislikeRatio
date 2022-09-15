@@ -16,3 +16,7 @@ This is a Tampermonkey Script which will help yout to see the like/dislike ratio
 If you se this, the script was successfully installed and you have nothing to do anymore.
 
 If you want to support my work please go and,  [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R5R0F1HWT)
+
+## Roadmap
+
+- Convert this Script into an standalone browser extension and publish it to the Stores 
