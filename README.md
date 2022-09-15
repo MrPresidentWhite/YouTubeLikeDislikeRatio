@@ -19,4 +19,4 @@ If you want to support my work please go and,  [![ko-fi](https://ko-fi.com/img/g
 
 ## Roadmap
 
-- Convert this Script into an standalone browser extension and publish it to the Stores 
+- [ ] Convert this Script into an standalone browser extension and publish it to the Stores 
