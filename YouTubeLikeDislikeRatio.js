@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouToube Like/Disklike Ratio
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  This script displays the like/dislike ratio in percent of a YouTube Video using the ReturnYouTubeDislikeAPI
 // @author       Mr_President_White#0420 (discord) | https://github.com/MrPresidentWhite (GitHub)
 // @match        https://www.youtube.com/watch?v=*
@@ -33,15 +33,7 @@ function userpageRatio() {
         var apiJSONData = getAPIResponse(apiURL);
 
         apiJSONData.then(function(result) {
-            var a = JSON.parse(result);
-            var dislikes = a.dislikes;
-            var likes = a.likes;
-            var totalVotes = likes + dislikes;
-
-            var prozentDislikes = 100 * dislikes / totalVotes;
-            var prozentLikes = 100 * likes / totalVotes;
-
-            var text = "<span style=\"font-weight: 400; font-size: 12px; color: var(--ytd-metadata-line-color, var(--yt-spec-text-secondary));\">Likes: " + prozentLikes.toFixed(1) + "% • Dislikes: " + prozentDislikes.toFixed(1) + "%<span>";
+            var text = "<span style=\"font-weight: 400; font-size: 12px; color: var(--ytd-metadata-line-color, var(--yt-spec-text-secondary));\">Likes: " + getProzentLikesDislikes(result, "likes") + "% • Dislikes: " + getProzentLikesDislikes(result, "dislikes") + "%<span>";
             var metaLine = item.querySelector("#metadata");
 
             metaLine.innerHTML += text;
@@ -58,23 +50,30 @@ function getRatio() {
     var apiJSONData = getAPIResponse(url);
 
     apiJSONData.then(function(result) {
-        var a = JSON.parse(result);
-        var dislikes = a.dislikes;
-        var likes = a.likes;
-        var totalVotes = likes + dislikes;
-
-        var prozentDislikes = 100 * dislikes / totalVotes;
-        var prozentLikes = 100 * likes / totalVotes;
-
         elements.forEach(function (item, index) {
-            console.log(item);
             if (index == 0) {
-                item.innerText += '\r\n' + prozentLikes.toFixed(1) + '% Likes';
+                item.innerText += '\r\n' + getProzentLikesDislikes(result, "likes") + '% Likes';
             } else if (index == 1) {
-                item.innerText += '\r\n' + prozentDislikes.toFixed(1) + '% Dislikes';
+                item.innerText += '\r\n' + getProzentLikesDislikes(result, "dislikes") + '% Dislikes';
             }
         });
     });
+}
+
+function getProzentLikesDislikes(json, voteType) {
+    var a = JSON.parse(json);
+    var dislikes = a.dislikes;
+    var likes = a.likes;
+    var totalVotes = likes + dislikes;
+
+    var prozentDislikes = 100 * dislikes / totalVotes;
+    var prozentLikes = 100 * likes / totalVotes;
+
+    if (voteType == "likes") {
+        return prozentLikes.toFixed(1);
+    } else if (voteType == "dislikes") {
+        return prozentDislikes.toFixed(1);
+    }
 }
 
 function getAPIResponse(url) {
